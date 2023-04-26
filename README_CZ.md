@@ -1,0 +1,1 @@
+# LaskaKit MAX31865 převodník pro termočlánek PT100x
