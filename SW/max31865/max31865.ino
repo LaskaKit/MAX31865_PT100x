@@ -3,9 +3,9 @@
 #include <Adafruit_MAX31865.h>
 
 // Use software SPI: CS, DI, DO, CLK
-//Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 12, 13);
+Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 13, 12);
 // use hardware SPI, just pass in the CS pin
-Adafruit_MAX31865 thermo = Adafruit_MAX31865(5);  // ESP32 default VSPI - MOSI=23, MISO=19, SCK=18, CS=5
+//Adafruit_MAX31865 thermo = Adafruit_MAX31865(10);  // ESP32 default VSPI - MOSI=23, MISO=19, SCK=18, CS=5
 
 #define PT100  // select sensor type: PT100 or PT1000
 
