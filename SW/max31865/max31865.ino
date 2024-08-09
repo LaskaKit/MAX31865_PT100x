@@ -2,12 +2,33 @@
 
 #include <Adafruit_MAX31865.h>
 
-// Use software SPI: CS, DI, DO, CLK
-Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 13, 12);
-// use hardware SPI, just pass in the CS pin
-//Adafruit_MAX31865 thermo = Adafruit_MAX31865(10);  // ESP32 default VSPI - MOSI=23, MISO=19, SCK=18, CS=5
+//#define LaskaKitESP32DEV
+//#define LaskaKitESP32S3
+#define LaskaKitESPink426
 
-#define PT100  // select sensor type: PT100 or PT1000
+#ifdef LaskaKitESP32DEV
+  #define MOSI  13
+  #define MISO  12
+  #define SCK   14
+  #define CS    15
+  #define POWER 2
+#elif defined LaskaKitESP32S3
+  #define MOSI  11
+  #define MISO  13
+  #define SCK   12
+  #define CS    10
+  #define POWER 47
+#elif defined LaskaKitESPink426
+  #define MOSI  37
+  #define MISO  21
+  #define SCK   14
+  #define CS    46
+  #define POWER 47
+#endif
+
+Adafruit_MAX31865 thermo = Adafruit_MAX31865(CS, MOSI, MISO, SCK);
+
+#define PT1000  // select sensor type: PT100 or PT1000
 
 #if defined(PT1000)
   #define RREF      4300.0
@@ -19,10 +40,13 @@ Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 13, 12);
 
 void setup() {
   Serial.begin(115200);
-  
+  pinMode(POWER, OUTPUT); 
+  digitalWrite(POWER, HIGH); // enable power supply for ePaper and uSup
+  delay(500);
+
   Serial.println("MAX31865 PT100/PT1000 Sensor Test!");
 
-  thermo.begin(MAX31865_3WIRE);  // set to 2WIRE, 3WIRE or 4WIRE as necessary
+  thermo.begin(MAX31865_2WIRE);  // set to 2WIRE, 3WIRE or 4WIRE as necessary
 }
 
 
